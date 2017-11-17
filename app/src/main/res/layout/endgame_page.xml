@@ -138,7 +138,6 @@
 
     <SeekBar
         android:id="@+id/climbTime"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="516dp"
         android:layout_height="63dp"
         android:layout_marginBottom="8dp"
@@ -155,7 +154,6 @@
 
     <SeekBar
         android:id="@+id/catchTime"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
         android:layout_width="516dp"
         android:layout_height="63dp"
         android:layout_marginBottom="8dp"

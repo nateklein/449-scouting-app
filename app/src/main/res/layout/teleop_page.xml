@@ -381,7 +381,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="autoHighFuelPlus5"
+        android:onClick="highFuelPlus5"
         android:text="+5"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"

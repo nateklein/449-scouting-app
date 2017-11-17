@@ -9,15 +9,16 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class goToEndgame extends Activity {
 
-    // Text fields
-    private TextView climbTimeText;
-    private TextView catchTimeText;
+    private int catchTimeValue;
+    private int climbTimeValue;
 
     // Input fields
-    private SeekBar climbTime;
-    private SeekBar catchTime;
+    private TextView climbTime;
+    private TextView catchTime;
     private RadioGroup climb;
     private EditText comments;
     // Displays endgame page on activity call
@@ -25,10 +26,10 @@ public class goToEndgame extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame_page);
-        climbTime = (SeekBar) findViewById(R.id.climbTime);
-        climbTime.setProgress(MainActivity.db.climbTime);
-        catchTime = (SeekBar) findViewById(R.id.catchTime);
-        catchTime.setProgress(MainActivity.db.catchTime);
+        climbTime = (TextView) findViewById(R.id.climbTime);
+        climbTime.setText(Integer.toString(climbTimeValue));
+        catchTime = (TextView) findViewById(R.id.catchTime);
+        catchTime.setText(Integer.toString(catchTimeValue));
         climb = (RadioGroup) findViewById(R.id.climb);
         switch (MainActivity.db.climb) {
             case 0:
@@ -48,11 +49,33 @@ public class goToEndgame extends Activity {
         comments.setText(MainActivity.db.comment);
     }
 
+    public void increaseClimbTime(View v) {
+        climbTimeValue++;
+        climbTime.setText(Integer.toString(climbTimeValue));
+    }
+
+    public void decreaseClimbTime(View v) {
+        if (climbTimeValue > 0) {
+            climbTimeValue--;
+            climbTime.setText(Integer.toString(climbTimeValue));
+        }
+    }
+
+    public void increaseCatchTime(View v) {
+        catchTimeValue++;
+        catchTime.setText(Integer.toString(catchTimeValue));
+    }
+
+    public void decreaseCatchTime(View v) {
+        if (catchTimeValue > 0) {
+            catchTimeValue--;
+            catchTime.setText(Integer.toString(catchTimeValue));
+        }
+    }
+
     // Calls activity to go to teleop page
     public void toTeleop(View v) {
         // Saves values to Database
-        MainActivity.db.catchTime = catchTime.getProgress();
-        MainActivity.db.climbTime = climbTime.getProgress();
         switch (climb.getCheckedRadioButtonId()) {
             case R.id.climbNoAttempt:
                 MainActivity.db.climb = 1;
@@ -68,6 +91,8 @@ public class goToEndgame extends Activity {
                 break;
         }
         MainActivity.db.comment = comments.getText().toString();
+        MainActivity.db.catchTime = catchTimeValue;
+        MainActivity.db.climbTime = climbTimeValue;
         // Switches pages
         Intent toTeleop = new Intent(this, goToTeleop.class);
         startActivity(toTeleop);
@@ -75,6 +100,23 @@ public class goToEndgame extends Activity {
 
     // Calls activity to submit
     public void submit(View v) {
+        switch (climb.getCheckedRadioButtonId()) {
+            case R.id.climbNoAttempt:
+                MainActivity.db.climb = 1;
+                break;
+            case R.id.climbSuccess:
+                MainActivity.db.climb = 2;
+                break;
+            case R.id.climbFail:
+                MainActivity.db.climb = 3;
+                break;
+            default:
+                MainActivity.db.climb = 0;
+                break;
+        }
+        MainActivity.db.comment = comments.getText().toString();
+        MainActivity.db.catchTime = catchTimeValue;
+        MainActivity.db.climbTime = climbTimeValue;
         Intent submit = new Intent(this, submit.class);
         startActivity(submit);
     }

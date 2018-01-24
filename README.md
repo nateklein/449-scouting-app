@@ -1,4 +1,4 @@
-# 449-scouting-app
+# FRC Team 449 Scouting App Frame
 Scouting app for FIRST Robotics Competition.
 
 Full Steamworks app: https://github.com/nateklein/449-steamworks-scouting-app

@@ -1,4 +1,4 @@
-package robo.scoutingappmockup;
+package robo.scoutingappframe;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ public class fixErrors extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.error_page);
         errors = (TextView) findViewById(R.id.errors);
-        errors.setText(submit.checkData());
+        errors.setText(MainActivity.db.checkData());
     }
 
     // Switches pages

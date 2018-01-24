@@ -1,4 +1,4 @@
-package robo.scoutingappmockup;
+package robo.scoutingappframe;
 
 import android.app.Activity;
 import android.content.Intent;

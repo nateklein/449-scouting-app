@@ -1,4 +1,4 @@
-package robo.scoutingappmockup;
+package robo.scoutingappframe;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class goToPrematch extends Activity implements AdapterView.OnItemSelectedListener{
+public class goToPrematch extends Activity implements AdapterView.OnItemSelectedListener {
+
+    // Team and match #
+    private static String matchNumberValue;
+    private static String teamNumberValue;
 
     // Input fields
     private EditText scoutNameText;
@@ -25,7 +29,7 @@ public class goToPrematch extends Activity implements AdapterView.OnItemSelected
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.prematch_page);
-        // Creates and sets data trackers to Database values
+        // Creates and sets data trackers to PowerUpDatabase values
         scoutNameText = (EditText) findViewById(R.id.scoutName);
         scoutNameText.setText(MainActivity.db.scoutName);
         noShowBox = (CheckBox) findViewById(R.id.noShow);
@@ -42,33 +46,39 @@ public class goToPrematch extends Activity implements AdapterView.OnItemSelected
         matchNumber.setAdapter(matchAdapter);
         matchNumber.setOnItemSelectedListener(this);
         matchNumber.setSelection(MainActivity.db.matchNumber);
+        teamNumberValue = teamNumber.getItemAtPosition(0).toString();
+        matchNumberValue = matchNumber.getItemAtPosition(0).toString();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // Checks which dropdown was selected and changes the Database value accordingly
+        // Checks which dropdown was selected and changes the PowerUpDatabase value accordingly
         if (parent.getId() == R.id.matchNumber) {
             MainActivity.db.matchNumber = pos;
+            matchNumberValue = parent.getItemAtPosition(pos).toString();
         }
         else if (parent.getId() == R.id.teamNumber) {
             MainActivity.db.teamNumber = pos;
+            teamNumberValue = parent.getItemAtPosition(pos).toString();
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // Checks which dropdown was selected and changes the Database value accordingly
+        // Checks which dropdown was selected and changes the PowerUpDatabase value accordingly
         if (parent.getId() == R.id.matchNumber) {
             MainActivity.db.matchNumber = 0;
+            matchNumberValue = parent.getItemAtPosition(0).toString();
         }
         else if (parent.getId() == R.id.teamNumber) {
             MainActivity.db.teamNumber = 0;
+            teamNumberValue = parent.getItemAtPosition(0).toString();
         }
     }
 
     // Calls activity to go to auto page
     public void toAuto(View v) {
-        // Saves values to Database
+        // Saves values to PowerUpDatabase
         MainActivity.db.scoutName = scoutNameText.getText().toString();
         MainActivity.db.noShow = noShowBox.isChecked();
         // Switches pages

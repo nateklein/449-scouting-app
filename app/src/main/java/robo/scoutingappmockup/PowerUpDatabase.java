@@ -1,4 +1,4 @@
-package robo.scoutingappframe;
+package robo.scoutingappmockup;
 
 /*
  * PowerUpDatabase is a class that stores all data being collected.

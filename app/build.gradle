@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        google() // Gradle 4.0+
+        maven { url "https://maven.google.com" } // Gradle < 4.0
+        maven2 { url 'http://repo1.maven.org/maven2' }
+        jcenter { url 'http://jcenter.bintray.com/' }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:3.0.1"
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -17,6 +30,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main'
+    }
 }
 
 dependencies {
@@ -26,5 +42,4 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
 }

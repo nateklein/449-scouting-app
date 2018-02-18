@@ -1,4 +1,4 @@
-package robo.scoutingappframe;
+package robo.scoutingappmockup;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

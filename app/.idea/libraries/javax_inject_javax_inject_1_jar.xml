@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="javax.inject:javax.inject:1@jar">
+    <CLASSES>
+      <root url="jar://$APPLICATION_HOME_DIR$/gradle/m2repository/javax/inject/javax.inject/1/javax.inject-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$APPLICATION_HOME_DIR$/gradle/m2repository/javax/inject/javax.inject/1/javax.inject-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$APPLICATION_HOME_DIR$/gradle/m2repository/javax/inject/javax.inject/1/javax.inject-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.bluetooth.BluetoothDevice;
 
@@ -65,24 +66,45 @@ public class submit extends Activity {
                         pc = device;
                     }
 
-                    /* Print supported UUIDs */
-                    Log.i("ScoutBT", "UUIDs are " + pc.getUuids().toString());
+                    /* Go through supported UUIDs and ensure one is what we want */
+                    ParcelUuid[] uuids = pc.getUuids();
+                    boolean hasWanted = false;
+                    for (ParcelUuid pUuid : uuids)
+                    {
+                        UUID uuid = pUuid.getUuid();
+                        Log.i("ScoutBT", "UUID found: " + uuid.toString());
+
+                        if (uuid.toString().toUpperCase().equals("0C1ABDD7-436F-79E0-7152-4D91528DA3D1"))
+                        {
+                            hasWanted = true;
+                            break;
+                        }
+                    }
 
                     /* Perform the connection and transfer */
-                    //UUID uid = UUID.fromString("0C1ABDD7-436F-79E0-7152-4D91528DA3D1");
-                    //BluetoothSocket sock;
-                    //try
-                    //{
-                    //    /* Make a socket for the PC and connect */
-                    //    sock = pc.createRfcommSocketToServiceRecord(uid);
-                    //    sock.connect();
+                    if (hasWanted)
+                    {
+                        Log.i("ScoutBT", "PC is running the scout server");
 
-                    //    Log.i("ScoutBT", "Connected to PC");
-                    //}
-                    //catch (IOException e)
-                    //{
-                    //    Log.e("ScoutBT", "Failed to do BT transfer");
-                    //}
+                        UUID uuid = UUID.fromString("0C1ABDD7-436F-79E0-7152-4D91528DA3D1");
+                        BluetoothSocket sock;
+                        try
+                        {
+                            /* Make a socket for the PC and connect - https://stackoverflow.com/questions/24573755/android-bluetooth-socket-connect-fails */
+                            sock = pc.createRfcommSocketToServiceRecord(uuid);
+                            //sock.connect();
+
+                            Log.i("ScoutBT", "Made socket");
+                        }
+                        catch (IOException e)
+                        {
+                            Log.e("ScoutBT", "Failed to do BT transfer");
+                        }
+                    }
+                    else
+                    {
+                        Log.i("ScoutBT", "No proper scouting interface on PC");
+                    }
                 }
 
                 // Go to confirmation page

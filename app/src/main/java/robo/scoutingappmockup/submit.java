@@ -1,6 +1,7 @@
 package robo.scoutingappmockup;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 public class submit extends Activity {
 
@@ -45,12 +47,42 @@ public class submit extends Activity {
                 Log.i("ScoutBT", "Starting Bluetooth connection\n");
 
                 MainActivity.pairedDevices = MainActivity.adapter.getBondedDevices();
-                if (MainActivity.pairedDevices.size() > 0)
+                //if (MainActivity.pairedDevices.size() > 0)
+                //{
+                //    for (BluetoothDevice device : MainActivity.pairedDevices)
+                //    {
+                //        Log.i("ScoutBT", device.getName() + " " + device.getAddress());
+                //    }
+                //}
+
+                /* Only do stuff with Bluetooth if we have a paired device */
+                if (MainActivity.pairedDevices.size() == 1)
                 {
+                    /* Obtain the PC device */
+                    BluetoothDevice pc = null;
                     for (BluetoothDevice device : MainActivity.pairedDevices)
                     {
-                        Log.i("ScoutBT", device.getName() + " " + device.getAddress());
+                        pc = device;
                     }
+
+                    /* Print supported UUIDs */
+                    Log.i("ScoutBT", "UUIDs are " + pc.getUuids().toString());
+
+                    /* Perform the connection and transfer */
+                    //UUID uid = UUID.fromString("0C1ABDD7-436F-79E0-7152-4D91528DA3D1");
+                    //BluetoothSocket sock;
+                    //try
+                    //{
+                    //    /* Make a socket for the PC and connect */
+                    //    sock = pc.createRfcommSocketToServiceRecord(uid);
+                    //    sock.connect();
+
+                    //    Log.i("ScoutBT", "Connected to PC");
+                    //}
+                    //catch (IOException e)
+                    //{
+                    //    Log.e("ScoutBT", "Failed to do BT transfer");
+                    //}
                 }
 
                 // Go to confirmation page

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
+import android.bluetooth.BluetoothDevice;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -38,6 +40,18 @@ public class submit extends Activity {
                 allWriter.append(csvString + "\n");
                 writer.close();
                 allWriter.close();
+
+                /* Bluetooth connect - https://code.tutsplus.com/tutorials/create-a-bluetooth-scanner-with-androids-bluetooth-api--cms-24084 */
+                Log.i("ScoutBT", "Starting Bluetooth connection\n");
+
+                MainActivity.pairedDevices = MainActivity.adapter.getBondedDevices();
+                if (MainActivity.pairedDevices.size() > 0)
+                {
+                    for (BluetoothDevice device : MainActivity.pairedDevices)
+                    {
+                        Log.i("ScoutBT", device.getName() + " " + device.getAddress());
+                    }
+                }
 
                 // Go to confirmation page
                 Intent toSubmitted = new Intent(this, submitted.class);

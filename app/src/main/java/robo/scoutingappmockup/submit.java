@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 public class submit extends Activity {
@@ -90,13 +91,18 @@ public class submit extends Activity {
                         BluetoothSocket sock;
                         try
                         {
-                            /* Make a socket for the PC and connect - https://stackoverflow.com/questions/24573755/android-bluetooth-socket-connect-fails */
-                            sock = pc.createRfcommSocketToServiceRecord(uuid);
-                            //sock.connect();
+                            /* Make a socket for the PC and connect -
+                                https://stackoverflow.com/questions/24573755/android-bluetooth-socket-connect-fails
+                                https://bugreports.qt.io/browse/QTBUG-40172
+                            */
+                            //sock = pc.createInsecureRfcommSocketToServiceRecord(uuid);
+                            Method m = pc.getClass().getMethod("createInsecureRfcommSocket", new Class[] {int.class});
+                            sock = (BluetoothSocket) m.invoke(pc, 17);
+                            sock.connect();
 
-                            Log.i("ScoutBT", "Made socket");
+                            Log.i("ScoutBT", "Connected to socket");
                         }
-                        catch (IOException e)
+                        catch (Exception e)
                         {
                             Log.e("ScoutBT", "Failed to do BT transfer");
                         }

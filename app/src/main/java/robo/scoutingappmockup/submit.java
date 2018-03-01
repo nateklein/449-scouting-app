@@ -96,8 +96,8 @@ public class submit extends Activity {
                                 https://bugreports.qt.io/browse/QTBUG-40172
                             */
                             //sock = pc.createInsecureRfcommSocketToServiceRecord(uuid);
-                            Method m = pc.getClass().getMethod("createInsecureRfcommSocket", new Class[] {int.class});
-                            sock = (BluetoothSocket) m.invoke(pc, 17);
+                            Method m = pc.getClass().getMethod("createInsecureRfcommSocket", new Class<?>[]{Integer.TYPE});
+                            sock = (BluetoothSocket) m.invoke(pc, new Object[]{Integer.valueOf(17)});
                             sock.connect();
 
                             Log.i("ScoutBT", "Connected to socket");

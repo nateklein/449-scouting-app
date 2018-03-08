@@ -94,10 +94,14 @@ public class submit extends Activity {
                             /* Make a socket for the PC and connect -
                                 https://stackoverflow.com/questions/24573755/android-bluetooth-socket-connect-fails
                                 https://bugreports.qt.io/browse/QTBUG-40172
+                                https://github.com/don/BluetoothSerial/issues/102
+                                https://unix.stackexchange.com/questions/168753/cannot-connect-pc-and-android-through-bluetooth (no answer)
+                                https://stackoverflow.com/questions/3255406/trouble-connecting-android-bluetooth-client-socket-to-ubuntu-server-socket (no good answer)
+                                Perhaps a PC issue?
                             */
-                            //sock = pc.createInsecureRfcommSocketToServiceRecord(uuid);
-                            Method m = pc.getClass().getMethod("createInsecureRfcommSocket", new Class<?>[]{Integer.TYPE});
-                            sock = (BluetoothSocket) m.invoke(pc, new Object[]{Integer.valueOf(17)});
+                            sock = pc.createRfcommSocketToServiceRecord(uuid);
+                            //Method m = pc.getClass().getMethod("createInsecureRfcommSocket", new Class<?>[]{Integer.TYPE});
+                            //sock = (BluetoothSocket) m.invoke(pc, new Object[]{Integer.valueOf(17)});
                             sock.connect();
 
                             Log.i("ScoutBT", "Connected to socket");
